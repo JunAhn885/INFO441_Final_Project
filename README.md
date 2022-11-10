@@ -28,7 +28,13 @@ Our target audience for the club member management app is college RSO officers a
     - Handle user sign in through Azure
   - /signout
     - Delete current user session and signs the user out
+  - /error
+    - Handle login and general server issues
+  - /unauthorized
+    - Deny access to non-UW emails
 
+- Users: /users
+- 
 
 
 
