@@ -34,7 +34,50 @@ Our target audience for the club member management app is college RSO officers a
     - Deny access to non-UW emails
 
 - Users: /users
-- 
+  - Get - /
+    - Gets info of all users on platform
+  - Post - /
+    - Posts user into the database
+  - Delete - / ?
+    - Remove user from database
+  - Get/Post/Put -  /email/details
+    - {
+      - email
+      - username
+      - number
+      - year
+      - major
+    - }
+    - Gets/Posts/Puts email/username/number/year/major of users
+  - Get/Post/Put - /email/rso
+    - {
+      - role
+      - attendance Score
+      - dues
+    - }
+    - Gets/Posts/Puts role/dues for clubs
+  - Put - /bio
+    - Updates user profile bio to users inputted bio
+  - Put - /image
+    - Updates user profile picture to users inputted image
+
+- RSO: /rso
+  - Get - /
+    - Gets all RSOs from the database
+  - Post - /
+    - Adds RSOs to the database 
+  - Delete - /
+    - Deletes RSOs from the database
+  - Members: /members
+    - Get/Post/Put/Delete - /
+      - Get/Post/Put/Delete user information
+    - Get - /emails
+      - Extract emails for the selected members for mass emailing 
+    - Post/Put - /attendance
+      - Update members attendance 
+    - Get/Post - /clubDues
+      - Get to retrieve members information 
+      - Post to update whether a member has paid club dues or not 
 
 
 
