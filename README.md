@@ -6,8 +6,13 @@ Our target audience for the club member management app is college RSO officers a
 
 
 ## Technical Description
+### Architectural Diagram
+![image of architectural diagram](images/arch-diagram%20copy.png)
 
 ### User Stories
+|Priority|User|Description|Technical Description|
+|---|---|---|---|
+|P0|As a Club Officer and a regular user|I want a platform or app where I can view and manage all the members|Website will be hosted on **Azure**, while the server side will be written in **Node.js** and **Express** framework. All information will be stored in **Firebase DB**, while communication is handled through **http protocol from the REST API**.
 
 
 ###  Endpoints
