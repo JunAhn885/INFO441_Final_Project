@@ -6,8 +6,10 @@ Our target audience for the club member management app is college RSO officers a
 
 
 ## Technical Description
+
 ### Architectural Diagram
-![image of architectural diagram](file path here)
+
+![image of architectural diagram](./architectural.jpg)
 
 ### User Stories
 |Priority|User|Description|Technical Description|
