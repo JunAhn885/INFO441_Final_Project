@@ -23,11 +23,11 @@ Our target audience for the club member management app is college RSO officers a
 
 
 ###  Endpoints
--Authentication
-  -/signin
-    -Handle user sign in through Azure
-  -/signout
-    -Delete current user session and signs the user out
+- Authentication
+  - /signin
+    - Handle user sign in through Azure
+  - /signout
+    - Delete current user session and signs the user out
 
 
 
