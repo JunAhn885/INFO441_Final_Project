@@ -15,7 +15,7 @@ To do so:
   and hit **Generate new private key** to download your key.
   This only needs to be done once.
   Keep the downloaded file, but do not check it into the repository.
-- Run `npm install --include-dev` in project folder to install
+- Run `npm install --include=dev` in project folder to install
   dependencies needed for the script.
 - Run `npm run upload-sample-data` in project folder.
   The script will prompt for a path to "Firebase private key".
