@@ -1,5 +1,6 @@
 # Project stuff
 
+.env
 scripts/backup-data.json
 
 # VisualStudioCode.gitignore
