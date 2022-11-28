@@ -1,0 +1,92 @@
+{
+    "organizations": {
+        "sample_0": {
+            "name": "Monkies of the UW Medicinal Herb Garden (Sample 0)",
+            "owner": "jacksui@uw.edu",
+            "due": {
+                "schedule": "ONEOFF",
+                "amount": 4.50
+            },
+            "members": {
+                "jacksui@uw.edu": {
+                    "timeJoined": "2022-11-28T00:08:39+0000",
+                    "tags": {
+                        "_owner": true,
+                        "_verified": true
+                    }
+                },
+                "scottng@uw.edu": {
+                    "timeJoined": "2022-11-28T00:08:39+0000",
+                    "tags": {
+                        "_unverified": true
+                    }
+                }
+            },
+            "events": {
+                "sample_0_event_0": {
+                    "name": "Halloween party!!!",
+                    "timeNotBefore": "2022-04-15T21:14:35+0000",
+                    "timeNotAfter": "2022-04-15T22:14:35+0000",
+                    "creator": "jacksui@uw.edu"
+                }
+            }
+        },
+        "sample_1": {
+            "name": "Canadian Geese by Drumheller Fountain (Sample 1)",
+            "owner": "scottng@uw.edu",
+            "tags": {
+                "sample_1_tag_0": {
+                    "name": "Privileged Geese"
+                },
+                "sample_1_tag_1": {
+                    "name": "Underprivileged Geese"
+                }
+            },
+            "members": {
+                "scottng@uw.edu": {
+                    "timeJoined": "2022-11-28T00:08:39+0000",
+                    "tags": {
+                        "_owner": true,
+                        "_verified": true,
+                        "sample_1_tag_1": true
+                    }
+                },
+                "jacksui@uw.edu": {
+                    "timeJoined": "2022-11-28T00:08:39+0000",
+                    "tags": {
+                        "_manager": true,
+                        "sample_1_tag_0": true
+                    }
+                }
+            },
+            "events": {
+                "sample_1_event_0": {
+                    "name": "$$ Xmas fundraising dinner $$",
+                    "timeNotBefore": "2022-04-15T21:14:35+0000",
+                    "timeNotAfter": "2022-04-15T22:14:35+0000",
+                    "creator": "scottng@uw.edu"
+                }
+            }
+        }
+    },
+    "users": {
+        "jacksui@uw.edu": {
+            "name": "Jack Sui",
+            "attendances": {
+                "sample_0_event_0": "2022-04-15T21:22:17+0000",
+                "sample_1_event_0": "2022-04-15T21:15:07+0000"
+            },
+            "payments": {
+                "sample_0": {
+                    "2022-11-28T00:08:39+0000": 4.50
+                }
+            }
+        },
+        "scottng@uw.edu": {
+            "name": "Scott N Nguyen",
+            "attendances": {
+                "sample_1_event_0": "2022-04-15T21:16:52+0000"
+            }
+        }
+    }
+}
