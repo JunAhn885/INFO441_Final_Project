@@ -1,6 +1,6 @@
 "use strict";
 
-import { get, getDatabase, ref, remove, set } from "firebase/database";
+import { get, getDatabase, push, ref, remove, set } from "firebase/database";
 
 /**
  * An API error to be returned to the user.
@@ -95,6 +95,18 @@ export class Database {
   static async set(path, value) {
     const reference = ref(getDatabase(), path);
     await set(reference, value);
+  }
+
+  /**
+   * Inserts a new value in the given list in Firebase Realtime Database.
+   * @param {string} path Path to the list to insert in the database.
+   * @param {object} value New value to insert into the given list.
+   * @returns Key of the newly inserted value.
+   */
+  static async insert(path, value) {
+    const listRef = ref(getDatabase(), path);
+    const newRef = await push(listRef, value);
+    return newRef.key;
   }
 
   /**

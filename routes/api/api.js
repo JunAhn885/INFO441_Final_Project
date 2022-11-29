@@ -3,6 +3,7 @@
 import express from "express";
 
 import userController from "./controllers/users.js";
+import orgController from "./controllers/orgs.js";
 import { ApiError, getTestUser, getUser } from "./utils.js";
 
 /**
@@ -22,7 +23,7 @@ function onApiRequest(req, res, next) {
       req.user = getTestUser();
       next();
       return;
-  }
+    }
   }
 
   throw new ApiError("Please log in to use this feature.");
@@ -53,6 +54,7 @@ const router = express.Router();
 router.use(onApiRequest);
 
 router.use("/user", userController);
+router.use("/org", orgController);
 
 router.use(onApiError);
 
