@@ -58,24 +58,24 @@ app.use(sessions({
   resave: false
 }))
 
-const msid = new msIdExpress.WebAppAuthClientBuilder(msalSettings).build()
-app.use(msid.initialize())
+const msid = new msIdExpress.WebAppAuthClientBuilder(msalSettings).build();
+app.use(msid.initialize());
 
 app.get("/signIn",
   msid.signIn({ postLoginRedirect: "/" })
-)
+);
 
 app.get("/signOut",
   msid.signOut({ postLogoutRedirect: "/" })
-)
+);
 
 app.get("/error", (req, res) => {
   res.status(500).send("Error: Server error")
-})
+});
 
 app.get("/unauthorized", (req, res) => {
   res.status(401).send("Error: Unauthorized")
-})
+});
 
 app.get("/test", async (req, res) => {
   //  take a random value from the database and return it
