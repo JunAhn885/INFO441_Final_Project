@@ -3,7 +3,7 @@
 import express from "express";
 
 import userController from "./controllers/users.js";
-import { ApiError } from "./utils.js";
+import { ApiError, getUser } from "./utils.js";
 
 /**
  * Catch-all middleware that runs first to check if the user is logged in.
@@ -11,6 +11,8 @@ import { ApiError } from "./utils.js";
  */
 function onApiRequest(req, res, next) {
   if (req.session.isAuthenticated) {
+    // Inject API user object
+    req.user = getUser(req);
     next();
   } else {
     throw new ApiError("Please log in before using this feature.");
