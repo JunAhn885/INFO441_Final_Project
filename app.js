@@ -1,16 +1,19 @@
 "use strict";
 
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import url from "node:url";
 
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express from "express";
+import "express-async-errors";
 import sessions from "express-session";
 import { initializeApp } from "firebase/app";
 import { equalTo, get, getDatabase, onValue, orderByChild, query, ref, set } from "firebase/database";
 import msIdExpress from "microsoft-identity-express";
 import logger from "morgan";
+
+import apiRouter from "./routes/api/api.js";
 
 dotenv.config();
 
@@ -37,7 +40,7 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID
 };
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 initializeApp(firebaseConfig);
@@ -77,13 +80,6 @@ app.get("/unauthorized", (req, res) => {
   res.status(401).send("Error: Unauthorized")
 });
 
-app.get("/test", async (req, res) => {
-  //  take a random value from the database and return it
-  const db = getDatabase();
-  const testRef = ref(db, "/organizations/sample_0/due/amount");
-  const testSnap = await get(testRef);
-  await set(testRef, 69.420);
-  res.send("Retrieved value is " + testSnap.val().toString());
-});
+app.use("/api", apiRouter);
 
 export default app;
