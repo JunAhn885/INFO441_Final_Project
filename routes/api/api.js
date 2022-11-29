@@ -14,11 +14,14 @@ function onApiRequest(req, res, next) {
     // Inject API user object
     req.user = getUser(req);
     next();
+    return;
   } else if (process.env.DEBUG) {
     // Check for debug API key
-    if (req.headers["X-API-Key"] === process.env.SESSION_SECRET) {
+    if (req.header("X-API-Key") === process.env.SESSION_SECRET) {
       // Inject test user
       req.user = getTestUser();
+      next();
+      return;
   }
   }
 
