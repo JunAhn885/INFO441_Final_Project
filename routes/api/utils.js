@@ -1,5 +1,7 @@
 "use strict";
 
+import { get, getDatabase, ref, remove, set } from "firebase/database";
+
 /**
  * An API error to be returned to the user.
  */
@@ -46,9 +48,49 @@ export function getUser(req) {
     return null;
   }
 
+  /**
+   * Could have used homeAccountId but it includes a dot, which we can't use in
+   * Firebase keys.
+   * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
+   */
   return new ApiUser(
-    req.session.account.homeAccountId,
+    req.session.account.localAccountId,
     req.session.account.username,
     req.session.account.name
   );
+}
+
+/**
+ * Utility functions for Firebase Realtime Database.
+ */
+export class Database {
+  /**
+   * Gets the value at the given path from Firebase Realtime Database.
+   * @param {string} path Path to the value to get from the database.
+   * @returns The object, or `null` if one is not found.
+   */
+  static async get(path) {
+    const reference = ref(getDatabase(), path);
+    const snapshot = await get(reference);
+    return snapshot.val();
+  }
+
+  /**
+   * Sets the value at the given path in Firebase Realtime Database.
+   * @param {string} path Path to the value to overwrite in the database.
+   * @param {object} value New value for the given path.
+   */
+  static async set(path, value) {
+    const reference = ref(getDatabase(), path);
+    await set(reference, value);
+  }
+
+  /**
+   * Removes the value at the given path from Firebase Realtime Database.
+   * @param {string} path Path to the value to remove from the database.
+   */
+  static async remove(path) {
+    const reference = ref(getDatabase(), path);
+    await remove(reference);
+  }
 }
