@@ -2,7 +2,7 @@
 
 import express from "express";
 
-import userController from "./controllers/user.js";
+import userController from "./controllers/users.js";
 import { ApiError } from "./utils.js";
 
 /**

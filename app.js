@@ -59,7 +59,7 @@ app.use(sessions({
   saveUninitialized: true,
   cookie: { maxAge: oneDay },
   resave: false
-}))
+}));
 
 const msid = new msIdExpress.WebAppAuthClientBuilder(msalSettings).build();
 app.use(msid.initialize());
