@@ -96,7 +96,7 @@ for member management.
       - Get/Post/Put/Delete user information
     - Get - /emails
       - Extract emails for the selected members for mass emailing
-    - Post/Put - /attendance
+    - Get/Post/Put - /attendance
       - Update members attendance
     - Get/Post - /clubDues
       - Get to retrieve members information

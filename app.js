@@ -11,6 +11,7 @@ import { initializeApp } from "firebase/app";
 import { equalTo, get, getDatabase, onValue, orderByChild, query, ref, set } from "firebase/database";
 import msIdExpress from "microsoft-identity-express";
 import logger from "morgan";
+import apiRouter from "./routes/api.js";
 
 dotenv.config();
 
@@ -60,6 +61,8 @@ app.use(sessions({
 
 const msid = new msIdExpress.WebAppAuthClientBuilder(msalSettings).build();
 app.use(msid.initialize());
+
+app.use('/api', apiRouter);
 
 app.get("/signIn",
   msid.signIn({ postLoginRedirect: "/" })
