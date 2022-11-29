@@ -27,7 +27,7 @@ for member management.
 
 ### Architectural Diagram
 
-![Architectural diagram of server, frontend, and communications](./architectural.jpg)
+![Architectural diagram of server, frontend, and communications](assets/architectural.jpg)
 
 ### User Stories
 
