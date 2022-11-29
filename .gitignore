@@ -2,6 +2,7 @@
 
 .env
 scripts/backup-data.json
+sessions/
 
 # VisualStudioCode.gitignore
 

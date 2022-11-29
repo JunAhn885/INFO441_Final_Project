@@ -4,7 +4,7 @@ async function loadIdentity(){
     let identity_div = document.getElementById("identity_div");
 
     try{
-        let identityInfo = await fetchJSON(`api/users/myIdentity`);
+        let identityInfo = await fetchJSON(`api/user/myIdentity`);
         
         if(identityInfo.status == "loggedin"){
             myIdentity = identityInfo.userInfo.username;

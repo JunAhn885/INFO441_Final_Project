@@ -1,14 +1,14 @@
 {
-    "organizations": {
+    "orgs": {
         "sample_0": {
             "name": "Monkies of the UW Medicinal Herb Garden (Sample 0)",
-            "owner": "sample_jack",
+            "owner": "5bf8e2f0-a017-4480-b3b1-0000c7578ade",
             "due": {
                 "schedule": "ONEOFF",
                 "amount": 4.50
             },
             "members": {
-                "sample_jack": {
+                "5bf8e2f0-a017-4480-b3b1-0000c7578ade": {
                     "timeJoined": "2022-11-28T00:08:39+0000",
                     "tags": {
                         "_owner": true,
@@ -27,7 +27,7 @@
                     "name": "Halloween party!!!",
                     "timeNotBefore": "2022-04-15T21:14:35+0000",
                     "timeNotAfter": "2022-04-15T22:14:35+0000",
-                    "creator": "sample_jack"
+                    "creator": "5bf8e2f0-a017-4480-b3b1-0000c7578ade"
                 }
             }
         },
@@ -51,7 +51,7 @@
                         "sample_1_tag_1": true
                     }
                 },
-                "sample_jack": {
+                "5bf8e2f0-a017-4480-b3b1-0000c7578ade": {
                     "timeJoined": "2022-11-28T00:08:39+0000",
                     "tags": {
                         "_manager": true,
@@ -70,7 +70,7 @@
         }
     },
     "users": {
-        "sample_jack": {
+        "5bf8e2f0-a017-4480-b3b1-0000c7578ade": {
             "email": "jacksui@uw.edu",
             "name": "Jack Sui",
             "attendances": {
