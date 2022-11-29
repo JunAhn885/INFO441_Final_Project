@@ -3,7 +3,7 @@
 import express from "express";
 
 import userController from "./controllers/users.js";
-import { ApiError, getUser } from "./utils.js";
+import { ApiError, getTestUser, getUser } from "./utils.js";
 
 /**
  * Catch-all middleware that runs first to check if the user is logged in.
@@ -14,9 +14,15 @@ function onApiRequest(req, res, next) {
     // Inject API user object
     req.user = getUser(req);
     next();
-  } else {
-    throw new ApiError("Please log in before using this feature.");
+  } else if (process.env.DEBUG) {
+    // Check for debug API key
+    if (req.headers["X-API-Key"] === process.env.SESSION_SECRET) {
+      // Inject test user
+      req.user = getTestUser();
   }
+  }
+
+  throw new ApiError("Please log in to use this feature.");
 }
 
 /**

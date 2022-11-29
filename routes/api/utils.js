@@ -61,6 +61,18 @@ export function getUser(req) {
 }
 
 /**
+ * Returns a test user.
+ * @returns A test user.
+ */
+export function getTestUser() {
+  return new ApiUser(
+    "12345678-1234-5678-1234-567812345678",
+    "user@example.com",
+    "Expresso Nodeman"
+  );
+}
+
+/**
  * Utility functions for Firebase Realtime Database.
  */
 export class Database {
