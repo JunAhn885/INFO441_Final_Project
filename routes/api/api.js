@@ -6,6 +6,18 @@ import userController from "./controllers/user.js";
 import { ApiError } from "./utils.js";
 
 /**
+ * Catch-all middleware that runs first to check if the user is logged in.
+ * If the user is not logged in, they receive an error message.
+ */
+function onApiRequest(req, res, next) {
+  if (req.session.isAuthenticated) {
+    next();
+  } else {
+    throw new ApiError("Please log in before using this feature.");
+  }
+}
+
+/**
  * Catch-all error handler for the entire API controller.
  * All errors are logged to console.
  * API errors are returned to the user, while internal errors are replaced with
@@ -26,6 +38,8 @@ function onApiError(err, req, res, next) {
 }
 
 const router = express.Router();
+
+router.use(onApiRequest);
 
 router.use("/user", userController);
 
