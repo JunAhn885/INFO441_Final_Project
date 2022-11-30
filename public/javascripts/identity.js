@@ -1,27 +1,34 @@
-let myIdentity = undefined;
+"use strict";
 
-async function loadIdentity(){
-    let identity_div = document.getElementById("identity_div");
+import { escapeHtml } from "./utils.js";
 
-    try{
-        let identityInfo = await fetchJSON(`api/user/myIdentity`);
-        
-        if(identityInfo.status == "loggedin"){
-            myIdentity = identityInfo.userInfo.username;
-            identity_div.innerHTML = `
-            <a href="/">${escapeHTML(identityInfo.userInfo.name)} (${escapeHTML(identityInfo.userInfo.username)})</a>
-            <a href="signout" class="btn btn-danger" role="button">Log out</a>`;
-        } else { //logged out
-            myIdentity = undefined;
-            identity_div.innerHTML = `
-            <a href="signin" class="btn btn-primary" role="button">Log in</a>`;
-        }
-    } catch(error){
-        myIdentity = undefined;
-        identity_div.innerHTML = `<div>
+export async function loadIdentity() {
+  try {
+    let div = document.getElementById("identity_div");
+    const res = await fetch("/api/user");
+    if (res.status === 200) {
+      // We are logged in
+      const user = await res.json();
+      div.innerHTML = `
+        <a href="/userInfo.html?user=${user.id}">
+          ${escapeHtml(user.name)}
+          (${escapeHtml(user.email)})
+        </a>
+        <a href="signout" class="btn btn-danger" role="button">Log out</a>
+      `;
+    } else {
+      // We are not logged in
+      div.innerHTML = `
+        <a href="signin" class="btn btn-primary" role="button">Log in</a>
+      `;
+    }
+  } catch (error) {
+    div.innerHTML = `
+      <div>
         <button onclick="loadIdentity()">retry</button>
         Error loading identity: <span id="identity_error_span"></span>
-        </div>`;
-        document.getElementById("identity_error_span").innerText = error;
-    }
+      </div>
+    `;
+    document.getElementById("identity_error_span").innerText = error;
+  }
 }

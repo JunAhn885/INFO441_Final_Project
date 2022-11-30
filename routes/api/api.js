@@ -51,11 +51,11 @@ function onApiError(err, req, res, next) {
 
 const router = express.Router();
 
-// router.use(onApiRequest);
+router.use(onApiRequest);
 
 router.use("/user", userController);
 router.use("/org", orgController);
 
-// router.use(onApiError);
+router.use(onApiError);
 
 export default router;
