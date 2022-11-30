@@ -4,6 +4,10 @@
 scripts/backup-data.json
 sessions/
 
+# macOS
+
+.DS_Store
+
 # VisualStudioCode.gitignore
 
 .vscode/*
