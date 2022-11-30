@@ -42,4 +42,9 @@ router.get("/:id?", async (req, res) => {
   res.json(user);
 });
 
+// router.post("/join?", async (req, res){
+//   let user = {};
+//   user = await Database.get(userPath);
+// });
+
 export default router;
