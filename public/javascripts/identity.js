@@ -16,6 +16,9 @@ export async function loadIdentity() {
         </a>
         <a href="signout" class="btn btn-danger" role="button">Log out</a>
       `;
+      if(document.getElementById("loggedin")){
+        document.getElementById("loggedin").classList.remove("d-none");
+      }
     } else {
       // We are not logged in
       div.innerHTML = `

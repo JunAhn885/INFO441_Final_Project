@@ -34,7 +34,6 @@ router.post("/", async (req, res) => {
   if (!req.body.name) {
     throw new ApiError("Must specify a name for the new organization.");
   }
-
   const now = new Date().toISOString();
   const org = {
     name: req.body.name,

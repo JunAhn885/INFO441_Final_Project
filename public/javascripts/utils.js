@@ -11,7 +11,7 @@ export function escapeHtml(str) {
     }[tag]));
 }
 
-async function fetchJSON(route, options) {
+export async function fetchJSON(route, options) {
   let response
   try {
     response = await fetch(route, {
