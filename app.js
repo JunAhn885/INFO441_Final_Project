@@ -9,11 +9,11 @@ import express from "express";
 import "express-async-errors";
 import session from "express-session";
 import { initializeApp } from "firebase/app";
-import { equalTo, get, getDatabase, onValue, orderByChild, query, ref, set } from "firebase/database";
 import msIdExpress from "microsoft-identity-express";
 import logger from "morgan";
-import apiRouter from "./routes/api/api.js";
 import fileStore from "session-file-store";
+
+import apiRouter from "./routes/api/api.js";
 
 // Load environment variables
 dotenv.config();
