@@ -17,10 +17,10 @@ import { fetchJSON } from "./utils.js";
 
   async function loadClubs() {
     try {
+      //Cannot just load all the clubs from database, need to only get the clubs you created / managed
       console.log('Loading joined clubs');
       let clubsJSON = await fetchJSON(`api/org`);
       let eachClub = clubsJSON.map(club => {
-        console.log(club);
         return `
         <div>
           ${club.name}
@@ -49,12 +49,4 @@ import { fetchJSON } from "./utils.js";
     }
     document.getElementById("clubName").value = "";
   }
-
-  // async function onManage() {
-  //   try {
-  //     export function
-  //   } catch (e) {
-  //     throw e;
-  //   }
-  // }
 })();
