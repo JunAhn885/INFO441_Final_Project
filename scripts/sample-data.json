@@ -15,7 +15,7 @@
                         "_verified": true
                     }
                 },
-                "sample_scott": {
+                "ced09eee-ff8f-407f-9dd8-0461c231904b": {
                     "timeJoined": "2022-11-28T00:08:39+0000",
                     "tags": {
                         "_unverified": true
@@ -33,7 +33,7 @@
         },
         "sample_1": {
             "name": "Canadian Geese by Drumheller Fountain (Sample 1)",
-            "owner": "sample_scott",
+            "owner": "ced09eee-ff8f-407f-9dd8-0461c231904b",
             "tags": {
                 "sample_1_tag_0": {
                     "name": "Privileged Geese"
@@ -43,7 +43,7 @@
                 }
             },
             "members": {
-                "sample_scott": {
+                "ced09eee-ff8f-407f-9dd8-0461c231904b": {
                     "timeJoined": "2022-11-28T00:08:39+0000",
                     "tags": {
                         "_owner": true,
@@ -64,7 +64,7 @@
                     "name": "$$ Xmas fundraising dinner $$",
                     "timeNotBefore": "2022-04-15T21:14:35+0000",
                     "timeNotAfter": "2022-04-15T22:14:35+0000",
-                    "creator": "sample_scott"
+                    "creator": "ced09eee-ff8f-407f-9dd8-0461c231904b"
                 }
             }
         }
@@ -83,7 +83,7 @@
                 }
             }
         },
-        "sample_scott": {
+        "ced09eee-ff8f-407f-9dd8-0461c231904b": {
             "email": "scottng@uw.edu",
             "name": "Scott N Nguyen",
             "attendances": {

@@ -7,6 +7,9 @@
     "start": "node ./bin/www.cjs",
     "upload-sample-data": "node scripts/upload-sample-data.mjs"
   },
+  "engines": {
+    "node": "~18"
+  },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
