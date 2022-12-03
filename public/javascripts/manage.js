@@ -22,13 +22,18 @@ import { fetchJSON } from "./utils.js";
       const urlParams = new URLSearchParams(window.location.search);
       const orgID = urlParams.get('org');
       let orgInfo = await fetchJSON(`api/org/${orgID}`);
-      console.log(orgInfo);
-      orgInfo.map(org => {
-        console.log(org);
-        document.getElementById('club-name').innerText = org.name;
-        let members = org.members;
-        console.log(members);
-      });
+      document.getElementById("club-name").innerText = orgInfo.name;
+
+      // Create member list
+      for (const memberId of Object.keys(orgInfo.members)) {
+        const member = await fetchJSON(`/api/user/${memberId}`);
+        const memberName = member.name;
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        li.appendChild(span);
+        span.innerText = memberName;
+        document.getElementById("ul-members").appendChild(li);
+      }
     } catch(e) {
       throw e;
     }

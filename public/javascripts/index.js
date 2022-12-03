@@ -12,7 +12,6 @@ import { fetchJSON } from "./utils.js";
     loadClubs();
 
     document.getElementById("btn-create-club").addEventListener("click", onCreateClub);
-    document.getElementById("btn-manage-club").addEventListener("click", onManage);
   }
 
   async function loadClubs() {
