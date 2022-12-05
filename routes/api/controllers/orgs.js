@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * POST to add a member
+ * POST to add a member to org
  */
 router.post("/addMember", async (req, res) => {
   if (!req.body.name) {
@@ -74,31 +74,23 @@ router.post("/addMember", async (req, res) => {
   if (!req.body.email) {
     throw new ApiError("Must specify a email for the new member.");
   }
+
+  //Add user to Org database
+  let member = {};
   const now = new Date().toISOString();
-  const user = {
-    name: req.body.name,
-    email: req.body.email
-  };
-  const id = await Database.insert(`/users`, user);
 
   const userInfo = {
     tags: member,
     timeJoined: now
   };
-
-  const member = {
+  member = {
     id: id,
     ...userInfo
   };
-  const id2 = await Database.insert(`/${req.body.org}/members`, member);
+  const id = await Database.insert(`/orgs/${req.body.org}/members`, member);
 
-  res.json({
-    id: id,
-    ...userInfo
-  });
+  res.json(member);
 });
-
-
 
 /**
  * POST to add an officer
@@ -108,28 +100,21 @@ router.post("/addOfficer", async (req, res) => {
     throw new ApiError("Must specify a name for the new organization.");
   }
   const now = new Date().toISOString();
-  const org = {
+
+  const officer = {
     name: req.body.name,
-    owner: req.user.id,
-    members: {
-      [req.user.id]: {
-        timeJoined: now,
-        tags: {
-          _owner: true
-        }
-      }
-    }
+    tags: {
+      _owner: true
+    },
+    timeJoined: now
   };
 
-  const id = await Database.insert("/orgs", org);
+  const id = await Database.insert(`/orgs/${req.body.org}/members`, officer);
   res.json({
     id: id,
     ...org
   });
 });
-
-
-
 
 /**
  * POST to change dues.
@@ -157,6 +142,11 @@ router.post("/dues", async (req, res) => {
     id: id,
     ...org
   });
+});
+
+router.delete("/delete", async (req, res) => {
+  remove("/orgs/" + req.body.org);
+  res.json({});
 });
 
 export default router;

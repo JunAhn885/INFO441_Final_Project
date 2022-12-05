@@ -11,6 +11,7 @@ import { fetchJSON } from "./utils.js";
     await loadIdentity();
     loadOrgDetails();
 
+    document.getElementById("btn-delete-club").addEventListener("click", onDeleteClub);
     document.getElementById("btn-add-member").addEventListener("click", onAddMember);
     document.getElementById("btn-add-officer").addEventListener("click", onAddOfficer);
     document.getElementById("btn-change-club-dues").addEventListener("click", onChangeClubDues);
@@ -40,18 +41,33 @@ import { fetchJSON } from "./utils.js";
     console.log("Finished Org Details");
   }
 
-  async function onAddMember(){
-    let email = document.getElementById("add-user-email").value;
-    let name = document.getElementById("add-user-name").value;
-    let org = document.getElementById("club-name").value;
-
+  async function onDeleteClub(){
+    console.log("Deleting Club");
     try{
-      console.log("Adding User to Club");
-      await fetchJSON(`api/org/addMember`, {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orgID = urlParams.get('org');
+      await fetchJSON(`api/org/delete`, {
+        method: "DELETE",
+        body: {org: orgID}
+      });
+    } catch(e) {
+      throw e;
+    }
+    console.log("Club deleted");
+  }
+
+  async function onAddMember(){
+    try{
+      const urlParams = new URLSearchParams(window.location.search);
+      const org = urlParams.get('org');
+      let email = document.getElementById("add-user-email").value;
+      let name = document.getElementById("add-user-name").value;
+      console.log("Added User to Userbase");
+      await fetchJSON("api/org/addMember", {
         method: "POST",
         body: {email: email, name: name, org: org}
       });
-      console.log("Added User");
+      console.log("Added User to org");
     } catch(e) {
       throw e;
     }
@@ -62,14 +78,16 @@ import { fetchJSON } from "./utils.js";
 
 
   async function onAddOfficer() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const org = urlParams.get('org')
     let email = document.getElementById("add-officer-email").value;
     let name = document.getElementById("add-officer-name").value;
 
     try{
       console.log("Adding Officer to Club");
-      await fetchJSON(`api/org`, {
+      await fetchJSON(`api/org/addOfficer`, {
         method: "POST",
-        body: {name: clubName} //{name : name, email : email}
+        body: {name: name, email : email, org: org}
       });
       console.log("Added Officer");
     } catch(e) {
@@ -81,6 +99,8 @@ import { fetchJSON } from "./utils.js";
   }
 
   async function onChangeClubDues(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const org = urlParams.get('org');
     let dues = document.getElementById("change-club-dues").value;
     let duesSchedule = document.getElementById("change-club-dues-schedule").value;
 
@@ -88,7 +108,7 @@ import { fetchJSON } from "./utils.js";
       console.log("Changing Club dues");
       await fetchJSON(`api/org`, {
         method: "POST",
-        body: {name: clubName} //dues: dues, schedule: duesSchedule
+        body: {dues: dues, duesSchedule: duesSchedule, org: org} //dues: dues, schedule: duesSchedule
       });
       console.log("Changed Club Dues");
     } catch(e) {
