@@ -60,6 +60,7 @@ import { fetchJSON } from "./utils.js";
     } catch(e) {
       throw e;
     }
+    window.location.href = '/';
     console.log("Club deleted");
   }
 
@@ -82,6 +83,7 @@ import { fetchJSON } from "./utils.js";
 
     document.getElementById("add-user-email").value = "";
     document.getElementById("add-user-name").value = "";
+    window.location.reload();
     //Can add a sentence that tells user the member has been add
   }
 
@@ -101,7 +103,7 @@ import { fetchJSON } from "./utils.js";
     } catch(e) {
       throw e;
     }
-
+    window.location.reload();
     document.getElementById("add-officer-email").value = "";
     document.getElementById("add-officer-name").value = "";
   }
@@ -125,5 +127,6 @@ import { fetchJSON } from "./utils.js";
 
     document.getElementById("change-club-dues").value = "";
     document.getElementById("change-club-dues-schedule").value = "";
+    window.location.reload();
   }
 })();

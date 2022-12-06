@@ -46,6 +46,7 @@ import { fetchJSON } from "./utils.js";
     } catch(e) {
       throw e;
     }
+    window.location.reload();
     document.getElementById("clubName").value = "";
   }
 })();
