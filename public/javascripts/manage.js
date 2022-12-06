@@ -21,8 +21,8 @@ import { fetchJSON } from "./utils.js";
     console.log("Loading Org Details");
     try{
       const urlParams = new URLSearchParams(window.location.search);
-      const orgID = urlParams.get('org');
-      let orgInfo = await fetchJSON(`api/org/${orgID}`);
+      const orgId = urlParams.get('org');
+      let orgInfo = await fetchJSON(`api/org/${orgId}`);
       document.getElementById("club-name").innerText = orgInfo.name;
       if(orgInfo.due){
         document.getElementById("current-dues").innerText = "Amount: " + orgInfo.due.amount;
@@ -30,20 +30,66 @@ import { fetchJSON } from "./utils.js";
         document.getElementById("current-dues").innerText = "None";
       }
 
-      // Create member list
       for (const memberId of Object.keys(orgInfo.members)) {
         const member = await fetchJSON(`/api/user/${memberId}`);
-        const memberName = member.name;
-        const li = document.createElement("li");
-        const myButton = document.createElement("button");
-        myButton.id = memberId;
-        li.addEventListener("click", onMemberButtonClick);
-        const span = document.createElement("span");
-        li.appendChild(span);
-        span.innerText = "Name: " + memberName + " ID: " + memberId;
-        const promoteButton = document.createElement("Button");
+        var memberName = member.name;
 
-        document.getElementById("ul-members").appendChild(li);
+        // if(orgInfo.members.memberId.tags._owner){
+        //   var promote = "Officer";
+        //   var kick = "N/A";
+        // } else {
+        //   var promote = document.createElement("button");
+        //   promote.id = memberId;
+        //   promote.innerText = "Promote";
+        //   promote.addEventListener("click", onMemberPromoteClick);
+
+        //   var kick = document.createElement("button");
+        //   kick.id = memberId;
+        //   kick.innerText = "Kick";
+        //   kick.addEventListener("click", onMemberKickClick);
+        // }
+
+        // if(orgInfo.members.memberId.tags._unverified){
+        //   var due = document.createElement("button");
+        //   due.id = memberId;
+        //   due.innerText = "Mark Due";
+        //   due.addEventListener("click", onMemberDueClick);
+        // } else if(member.tags._verified) {
+        //   var due = "Paid";
+        // } else {
+        //   var due = "None";
+        // }
+
+        var promote = document.createElement("button");
+        promote.id = memberId;
+        promote.innerText = "Promote";
+        promote.addEventListener("click", onMemberPromoteClick);
+
+        var kick = document.createElement("button");
+        kick.id = memberId;
+        kick.innerText = "Kick";
+        kick.addEventListener("click", onMemberKickClick);
+
+        var due = document.createElement("button");
+        due.id = memberId;
+        due.innerText = "Mark Due";
+        due.addEventListener("click", onMemberDueClick);
+
+        var table = document.getElementById(`member-info`);
+
+        var newRow = table.insertRow(-1);
+
+        var cell = newRow.insertCell(0);
+        var cell1 = newRow.insertCell(1);
+        var cell2 = newRow.insertCell(2);
+        var cell3 = newRow.insertCell(3);
+        var cell4 = newRow.insertCell(4);
+
+        cell.innerHTML = memberId;
+        cell1.innerHTML = memberName;
+        cell2.appendChild(due);
+        cell3.appendChild(kick);
+        cell4.appendChild(promote);
       }
     } catch(e) {
       throw e;
@@ -51,8 +97,47 @@ import { fetchJSON } from "./utils.js";
     console.log("Finished Org Details");
   }
 
-  async function onMemberButtonClick(e) {
-    // e.target.id === (memberId)
+  async function onMemberPromoteClick() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orgId = urlParams.get('org');
+    try{
+      await fetchJSON(`api/org/officer`, {
+        method: "POST",
+        body: {member: this.id, orgId: orgId}
+      });
+      window.location.reload();
+    } catch(e) {
+      throw e;
+    }
+  }
+
+  async function onMemberKickClick() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orgId = urlParams.get('org');
+    try{
+      await fetchJSON(`api/org/member`, {
+        method: "DELETE",
+        body: {member: this.id, orgId: orgId}
+      });
+      window.location.reload();
+    } catch(e) {
+      throw e;
+    }
+  }
+
+  // Change the member's status to verified member after they pay dues
+  async function onMemberDueClick() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orgId = urlParams.get('org');
+    try{
+      await fetchJSON(`api/org/dues/paid`, {
+        method: "POST",
+        body: {member: this.id, orgId: orgId}
+      });
+      window.location.reload();
+    } catch(e) {
+      throw e;
+    }
   }
 
   async function onDeleteClub(){
@@ -119,13 +204,12 @@ import { fetchJSON } from "./utils.js";
     const urlParams = new URLSearchParams(window.location.search);
     const org = urlParams.get('org');
     let amount = document.getElementById("change-club-dues").value;
-    let duesSchedule = document.getElementById("change-club-dues-schedule").value;
 
     try{
       console.log("Changing Club dues");
       await fetchJSON(`api/org/dues`, {
         method: "POST",
-        body: {amount : amount, schedule: duesSchedule, org: org}
+        body: {amount : amount, org: org}
       });
       console.log("Changed Club Dues");
     } catch(e) {
@@ -133,7 +217,6 @@ import { fetchJSON } from "./utils.js";
     }
 
     document.getElementById("change-club-dues").value = "";
-    document.getElementById("change-club-dues-schedule").value = "";
     window.location.reload();
   }
 })();

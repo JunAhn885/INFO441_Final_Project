@@ -67,7 +67,7 @@ router.post("/", async (req, res) => {
 /**
  * POST to add a member to org
  */
- router.post("/member", async (req, res) => {
+router.post("/member", async (req, res) => {
   if (!req.body.name) {
     throw new ApiError("Must specify a name for the new member.");
   }
@@ -81,11 +81,13 @@ router.post("/", async (req, res) => {
     email: req.body.email
   };
   const id = await Database.insert("/users", user);
-  
-  const userInfo = {};
+
+  let userInfo = {};
   if(await Database.get(`/orgs/${req.body.orgId}/due`)){
     userInfo = {
-      tags: _unverified,
+      tags: {
+        _unverified: true
+      },
       timeJoined: now
     };
   } else {
@@ -101,15 +103,21 @@ router.post("/", async (req, res) => {
   });
 });
 
+// Delete a member from database
+router.delete("/member", async (req, res) => {
+  await Database.remove(`/orgs/${req.body.orgId}/members/${req.body.member}`);
+  res.json({});
+});
+
 /**
  * POST to add an officer
  */
 router.post("/officer", async (req, res) => {
-  if (!req.body.id) {
+  if (!req.body.member) {
     throw new ApiError("Must specify a current member's ID.");
   }
 
-  await Database.set(`/orgs/${req.body.org}/members/${req.body.id}/tags`, {_owner: true});
+  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.member}/tags`, {_owner: true});
   res.json({_owner: true});
 });
 
@@ -129,6 +137,22 @@ router.post("/dues", async (req, res) => {
   res.json({due});
 });
 
+/**
+ * POST dues paid.
+ */
+ router.post("/dues/paid", async (req, res) => {
+  if (!req.body.member) {
+    throw new ApiError("Must specify a current member's ID.");
+  }
+
+  await Database.delete(`/orgs/${req.body.org}/members/${member}/tags/_unverified`);
+  await Database.set(`/orgs/${req.body.org}/members/${member}/tags`, {_verified: true});
+  res.json({_verified : true});
+});
+
+/**
+ * DELETE Org.
+ */
 router.delete("/delete", async (req, res) => {
   await Database.remove("/orgs/" + req.body.org);
   res.json({});
