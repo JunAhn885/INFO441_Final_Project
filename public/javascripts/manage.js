@@ -25,7 +25,7 @@ import { fetchJSON } from "./utils.js";
       let orgInfo = await fetchJSON(`api/org/${orgID}`);
       document.getElementById("club-name").innerText = orgInfo.name;
       if(orgInfo.due){
-        document.getElementById("current-dues").innerText = "Amount: " + orgInfo.due.amount + " Schedule: " + orgInfo.due.schedule;
+        document.getElementById("current-dues").innerText = "Amount: " + orgInfo.due.amount;
       } else {
         document.getElementById("current-dues").innerText = "None";
       }
@@ -35,6 +35,9 @@ import { fetchJSON } from "./utils.js";
         const member = await fetchJSON(`/api/user/${memberId}`);
         const memberName = member.name;
         const li = document.createElement("li");
+        const myButton = document.createElement("button");
+        myButton.id = memberId;
+        li.addEventListener("click", onMemberButtonClick);
         const span = document.createElement("span");
         li.appendChild(span);
         span.innerText = "Name: " + memberName + " ID: " + memberId;
@@ -46,6 +49,10 @@ import { fetchJSON } from "./utils.js";
       throw e;
     }
     console.log("Finished Org Details");
+  }
+
+  async function onMemberButtonClick(e) {
+    // e.target.id === (memberId)
   }
 
   async function onDeleteClub(){

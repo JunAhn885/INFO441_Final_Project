@@ -81,10 +81,18 @@ router.post("/", async (req, res) => {
     email: req.body.email
   };
   const id = await Database.insert("/users", user);
-
-  const userInfo = {
-    timeJoined: now
-  };
+  
+  const userInfo = {};
+  if(await Database.get(`/orgs/${req.body.orgId}/due`)){
+    userInfo = {
+      tags: _unverified,
+      timeJoined: now
+    };
+  } else {
+    userInfo = {
+      timeJoined: now
+    };
+  }
 
   await Database.set(`/orgs/${req.body.orgId}/members/${id}`, userInfo);
 
@@ -112,13 +120,9 @@ router.post("/dues", async (req, res) => {
   if (!req.body.amount) {
     throw new ApiError("Must specify a due amount.");
   }
-  if (!req.body.schedule) {
-    throw new ApiError("Must specify a schedule for the new due.");
-  }
 
   const due = {
-    amount: req.body.amount,
-    schedule: req.body.schedule
+    amount: req.body.amount
   };
 
   const id = await Database.set(`/orgs/${req.body.org}/due`, due);
