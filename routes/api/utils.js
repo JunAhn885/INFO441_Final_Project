@@ -195,8 +195,8 @@ export class Database {
       return false;
     }
 
-    const isMember = org.members !== null && org.members[userId] !== null;
-    const hasTag = org.members[userId].tags !== null &&
+    const isMember = org.members != null && org.members[userId] != null;
+    const hasTag = isMember && org.members[userId].tags != null &&
       Object.keys(org.members[userId].tags).includes(tag);
     return isMember && (!tag || hasTag);
   }

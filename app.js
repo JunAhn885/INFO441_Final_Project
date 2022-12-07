@@ -14,6 +14,7 @@ import logger from "morgan";
 import fileStore from "session-file-store";
 
 import apiRouter from "./routes/api/api.js";
+import directRouter from "./routes/direct/direct.js";
 
 // Load environment variables
 dotenv.config();
@@ -81,9 +82,17 @@ if (process.env.DEBUG) {
 
 // Initialize Azure Auth
 const msid = new msIdExpress.WebAppAuthClientBuilder(msalSettings).build();
+
+export function signInWithRedirect(redirect) {
+  return msid.signIn({
+    postLoginRedirect: redirect
+  });
+}
+
 app.use(msid.initialize());
 
-app.use('/api', apiRouter);
+app.use("/api", apiRouter);
+app.use("/direct", directRouter);
 
 app.get("/signIn",
   msid.signIn({ postLoginRedirect: "/" })
