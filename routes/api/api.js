@@ -2,8 +2,9 @@
 
 import express from "express";
 
-import userController from "./controllers/users.js";
+import eventController from "./controllers/events.js";
 import orgController from "./controllers/orgs.js";
+import userController from "./controllers/users.js";
 import { ApiError, getTestUser, getUser } from "./utils.js";
 
 /**
@@ -55,6 +56,7 @@ router.use(onApiRequest);
 
 router.use("/user", userController);
 router.use("/org", orgController);
+router.use("/event", eventController);
 
 router.use(onApiError);
 

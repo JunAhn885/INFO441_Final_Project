@@ -115,7 +115,7 @@ router.post("/member", async (req, res) => {
   });
 });
 
-// Delete a member from database
+// DELETE a member from the given organization.
 router.delete("/member", async (req, res) => {
   await Database.remove(`/orgs/${req.body.orgId}/members/${req.body.member}`);
   res.json({});
