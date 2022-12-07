@@ -7,8 +7,7 @@ By Jun Ahn, Patricia Ma, Scott Nguyen, and Jack Sui.
 ## Project Description
 
 Our target audience for the club member management app is college RSO officers
-and administrators.
-We envision club members and club officers to use our applications to easily
+and administrators. We envision club officers to use our applications to easily 
 manage various member status such as attendance, dues, membership status, etc.
 
 Our audience will choose our application over their previous management methods
@@ -33,18 +32,16 @@ for member management.
 
 |Priority|User|Description|Technical Description|
 |---|---|---|---|
-|P0|As a Club Officer and a regular user|I want a platform or app where I can view and manage all the members|Website will be hosted on **Azure**, while the server side will be written in **Node.js** and **Express** framework. All information will be stored in **Firebase DB**, while communication is handled through **http protocol from the REST API**|
-|P0|As a Club Officer and a regular user|I want to be able to change member’s information on the app along with their information (email, phone, grade, major and role)|Use **get**, **post** and **delete** to make appropriate updates about a member. Information will be sent in **JSON** format, While requests will be handled from the backend|
-|P1|As a specific club officer|I want to be able to access the app specifically for our club|Use **authentication** to create numerous accounts specific to the RSO and give authorization only to the RSO members|
-|P2|As a club officer|I want to be able to send out mass emails to all members|Officer can select members (all or specific) on the app which will send a **GET** request to **Firebase DB** to extract emails which then will send mass emails to the selected memebrs|
-|P2|Secretary|I want to be able to check attendance of the members|Secretary can simply check attendance by clicking on the checkbox next to the member’s name, which will send a **POST** request to the **Firebase DB** to update attendance|
-|P3|Treasurer|I want to track the dues/finances of my club members|There will be an option to select whether a member has paid dues or not. This functionality will be handled using **POST** and **GET** requests|
-|P4|Officer|I want to be able to search members on the app|Create a physical search bar using **HTML**, **CSS**, and **REACT**, while input in the search bar will be sent to the server side via **http** protocol, and information will be sent back from the **Firebase DB** in a **json** format.
-|P5|Officer|I want to be able to filter members based on their grade, status and major|Selected criterias will be sent to the server in a **JSON** format while the server will use the **Javascript** function to retrieve & send members with matching criterias from the **Firebase DB**
+|P0|As a Club Officer|I want a platform where that I can use to manage my club |Website will be hosted on **Azure**, while the server side will be written in **Node.js** and **Express** framework. All information will be stored in **Firebase DB**, while communication is handled through **http protocol from the REST API**|
+|P0|As a Club Officer|On the platform I want to view all the members information| **Get** calls to members will allow officers to view member details|
+|P0|As a Club Officer|I want to be able to add club members information into my specific club |Use **post** to make appropriate updates to club user database. Information will be sent in **JSON** format, While requests will be handled from the backend|
+|P0|As a Club Officer|I want to be able to change the club's information on the website (add and change club dues, and add officer roles)|Use **post** and **delete** to make appropriate updates about the club. Information will be sent in **JSON** format, While requests will be handled from the backend|
+|P0|As a Club Officer|I want to track the dues/finances of my club members|There will be an button for marking a member when they have paid dues. This functionality will be handled using **POST** and **GET** requests|
+|P1|As a Club Officer|I want to be able to access the app specifically for our club|Use **authentication** to create numerous accounts specific to the RSO and give authorization only to the RSO members|
+|P2|As a Club Officer|I want to be able to check attendance of the members|Secretary can simply check attendance by clicking on the checkbox next to the member’s name, which will send a **POST** request to the **Firebase DB** to update attendance|
+|P3|As a Club Officer|I want to be able to send out mass emails to all members|Officer can select members (all or specific) on the app which will send a **GET** request to **Firebase DB** to extract emails which then will send mass emails to the selected memebrs|
 
 ### Endpoints
-
-*These may not be up to date - refer to upcoming Postman docs.*
 
 - Authentication
   - /signin
@@ -56,48 +53,32 @@ for member management.
   - /unauthorized
     - Deny access to non-UW emails
 
-- Users: /users
+- Users: /user
   - Get - /
     - Gets info of all users on platform
   - Post - /
     - Posts user into the database
-  - Delete - / ?
+  - Delete - /
     - Remove user from database
-  - Get/Post/Put -  /email/details
+  - Get/Post -  /email/details
     - {
       - email
       - username
-      - number
-      - year
-      - major
     - }
-    - Gets/Posts/Puts email/username/number/year/major of users
-  - Get/Post/Put - /email/rso
-    - {
-      - role
-      - attendance Score
-      - dues
-    - }
-    - Gets/Posts/Puts role/dues for clubs
-  - Put - /bio
-    - Updates user profile bio to users inputted bio
-  - Put - /image
-    - Updates user profile picture to users inputted image
+    - Gets/Posts/Puts email/username of users
 
-- RSO: /rso
+- Orgs: /org
   - Get - /
     - Gets all RSOs from the database
   - Post - /
     - Adds RSOs to the database
   - Delete - /
     - Deletes RSOs from the database
+  - Get/Post - /dues
+      - Get to retrieve RSO's due information
+      - Post to update RSO's dues
   - Members: /members
-    - Get/Post/Put/Delete - /
-      - Get/Post/Put/Delete user information
-    - Get - /emails
-      - Extract emails for the selected members for mass emailing
-    - Get/Post/Put - /attendance
+    - Get/Post/Delete - /
+      - Get/Post/Delete user information
+    - Get/Post - /attendance
       - Update members attendance
-    - Get/Post - /clubDues
-      - Get to retrieve members information
-      - Post to update whether a member has paid club dues or not
