@@ -2,6 +2,12 @@
 
 import { equalTo, get, getDatabase, orderByChild, push, query, ref, remove, set } from "firebase/database";
 
+export const Tags = Object.freeze({
+  Unverified: "_unverified",
+  Verified: "_verified",
+  Owner: "_owner"
+});
+
 /**
  * An API error to be returned to the user.
  */
@@ -154,5 +160,33 @@ export class Database {
   static async remove(path) {
     const reference = ref(getDatabase(), path);
     await remove(reference);
+  }
+
+  /**
+   * Checks whether the given user is part of the given organization and has the
+   * given tag.
+   * If tag is `null`, only checks if the given user is part of the given
+   * organization.
+   * @param {string} orgId Organization ID.
+   * @param {string} userId User ID.
+   * @param {string} tag Tag value.
+   */
+  static async hasTag(orgId, userId, tag) {
+    const org = await Database.get(`/orgs/${orgId}`);
+    if (!org) {
+      console.warn(`Database.hasTag: invalid org ID ${orgId}`);
+      return false;
+    }
+
+    const user = await Database.get(`/users/${userId}`);
+    if (!user) {
+      console.warn(`Database.hasTag: invalid user ID ${userId}`);
+      return false;
+    }
+
+    const isMember = org.members !== null && org.members[userId] !== null;
+    const hasTag = org.members[userId].tags !== null &&
+      Object.keys(org.members[userId].tags).includes(tag);
+    return isMember && (!tag || hasTag);
   }
 }

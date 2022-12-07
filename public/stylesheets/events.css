@@ -1,0 +1,6 @@
+/* Styles for events.html */
+
+/* Uppercase org name */
+#h2-org-name {
+  text-transform: uppercase;
+}

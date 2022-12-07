@@ -1,15 +1,14 @@
 "use strict";
 
 import { loadIdentity } from "./identity.js";
-import { fetchJSON } from "./utils.js";
+import { fetchJSON, id } from "./utils.js";
 
 (async () => {
   window.addEventListener("load", init);
 
-  async function init(){
-    console.log("initializing");
+  async function init() {
     await loadIdentity();
-    loadOrgDetails();
+    await loadOrgDetails();
 
     document.getElementById("btn-delete-club").addEventListener("click", onDeleteClub);
     document.getElementById("btn-add-member").addEventListener("click", onAddMember);
@@ -17,10 +16,19 @@ import { fetchJSON } from "./utils.js";
   }
 
   async function loadOrgDetails(){
-    console.log("Loading Org Details");
-    try{
+    try {
       const urlParams = new URLSearchParams(window.location.search);
-      const orgId = urlParams.get('org');
+      const orgId = urlParams.get("org");
+      if (!orgId) {
+        return;
+      }
+
+      // Link to events page
+      id("btn-events").addEventListener("click", () => {
+        window.location = `/events.html?orgId=${orgId}`;
+      });
+      id("btn-events").disabled = false;
+
       let orgInfo = await fetchJSON(`api/org/${orgId}`);
       document.getElementById("club-name").innerText = orgInfo.name;
       if(orgInfo.due){
