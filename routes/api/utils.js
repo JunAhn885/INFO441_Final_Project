@@ -83,6 +83,17 @@ export function getTestUser() {
  */
 export class Database {
   /**
+   * Checks whether the value at the given path exists in the database.
+   * @param {string} path Path to the value to check.
+   * @returns Whether the object exists.
+   */
+  static async exists(path) {
+    const reference = ref(getDatabase(), path);
+    const snapshot = await get(reference);
+    return snapshot.exists();
+  }
+
+  /**
    * Gets the value at the given path from Firebase Realtime Database.
    * @param {string} path Path to the value to get from the database.
    * @returns The object, or `null` if one is not found.

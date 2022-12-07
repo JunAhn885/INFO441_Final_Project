@@ -66,4 +66,17 @@ router.post("/:orgId", async (req, res) => {
   });
 });
 
+router.delete("/:orgId/:eventId", async (req, res) => {
+  if (!await Database.hasTag(req.params.orgId, req.user.id, Tags.Owner)) {
+    throw new ApiError(
+      "Not authorized to delete events in the given organization."
+    );
+  }
+
+  await Database.remove(
+    `/orgs/${req.params.orgId}/events/${req.params.eventId}`
+  );
+  res.end();
+});
+
 export default router;

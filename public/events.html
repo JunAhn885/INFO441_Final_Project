@@ -18,8 +18,23 @@
     <div id="identity_div">loading...</div>
   </nav>
   <h1>Event Management</h1>
-  <h2 class="h2-subtitle" id="h2-org-name">Aurora (Test)</h2>
-  <br/>
+  <h2 class="h2-subtitle" id="h2-org-name"></h2>
+
+  <form id="form-add-event">
+    <h3>Add an Event</h3>
+    <label for="input-event-name">Name:</label>
+    <input id="input-event-name" name="name" required>
+    <br>
+    <label for="input-event-start">Check-in opens at:</label>
+    <input id="input-event-start" name="timeNotBefore" type="datetime-local" required>
+    <br>
+    <label for="input-event-end">Check-in closes at:</label>
+    <input id="input-event-end" name="timeNotAfter" type="datetime-local" required>
+    <br>
+    <button class="btn btn-primary">Add Event</button>
+  </form>
+  <em id="em-form-result"></em>
+
   <table class="table" id="table-org-events">
     <thead>
       <tr>
@@ -33,6 +48,7 @@
     </thead>
     <tbody></tbody>
   </table>
+  <em id="em-modify-result"></em>
 </body>
 
 </html>
