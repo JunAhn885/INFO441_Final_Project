@@ -32,9 +32,9 @@ for member management.
 
 |Priority|User|Description|Technical Description|
 |---|---|---|---|
-|P0|As a Club Officer|I want a platform where that I can use to manage my club |Website will be hosted on **Azure**, while the server side will be written in **Node.js** and **Express** framework. All information will be stored in **Firebase DB**, while communication is handled through **http protocol from the REST API**|
-|P0|As a Club Officer|On the platform I want to view all the members information| **Get** calls to members will allow officers to view member details|
+|P0|As a Club Officer|I want a platform that I can use to manage my club |Website will be hosted on **Azure**, while the server side will be written in **Node.js** and **Express** framework. All information will be stored in **Firebase DB**, while communication is handled through **http protocol from the REST API**|
 |P0|As a Club Officer|I want to be able to add club members information into my specific club |Use **post** to make appropriate updates to club user database. Information will be sent in **JSON** format, While requests will be handled from the backend|
+|P0|As a Club Officer|On the platform I want to view all the members information| **Get** calls to members will allow officers to view member details|
 |P0|As a Club Officer|I want to be able to change the club's information on the website (add and change club dues, and add officer roles)|Use **post** and **delete** to make appropriate updates about the club. Information will be sent in **JSON** format, While requests will be handled from the backend|
 |P0|As a Club Officer|I want to track the dues/finances of my club members|There will be an button for marking a member when they have paid dues. This functionality will be handled using **POST** and **GET** requests|
 |P1|As a Club Officer|I want to be able to access the app specifically for our club|Use **authentication** to create numerous accounts specific to the RSO and give authorization only to the RSO members|
