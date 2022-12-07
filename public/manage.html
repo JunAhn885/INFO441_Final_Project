@@ -16,26 +16,21 @@
     <div><a href="/">Return to Homepage</a></div>
     <div id="identity_div">loading...</div>
   </nav>
-  <h1>Manage Club: <span id="club-name"></span> <button id="btn-delete-club">Delete Club</button></h1>
-  <br>
-  <h2><u>Initialize Club</u></h2>
-
-  <h4>Add Officers</h4>
-  <input type="text" id="add-officer-id" placeholder="Officer ID">
-  <button id="btn-add-officer">Add Officer</button>
-
-  <h4>Change Club Dues</h4>
+  <h1>Manage Club: <span id="club-name"></span> <button id="btn-delete-club" class="btn btn-sm btn-danger">Delete Club</button></h1>
+  <br/>
+  <h2><u>Change Club Dues</u></h2>
   <h5>Current Club Dues: <span id="current-dues"></span></h5>
   <input type="text" id="change-club-dues" placeholder="Club Dues">
-  <button id="btn-change-club-dues">Change</button>
-  <br>
+  <button id="btn-change-club-dues" class="btn btn-sm btn-success">Change</button>
+  <br/>
 
   <h2><u>Manage Members</u></h2>
 
   <h3>Add Members</h3>
   <input type="text" id="add-user-email" placeholder="Email">
   <input type="text" id="add-user-name" placeholder="Name">
-  <button id="btn-add-member">Add Member</button>
+  <button id="btn-add-member" class="btn btn-sm btn-success">Add Member</button>
+
 
   <div id="club-info">
     <h3>Members</h3>
@@ -47,9 +42,10 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
-        <th scope="col">Due</th>
-        <th scope="col">Kick</th>
-        <th scope="col">Promote</th>
+        <th scope="col">Role</th>
+        <th scope="col">Dues</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>

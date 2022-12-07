@@ -113,11 +113,11 @@ router.delete("/member", async (req, res) => {
  * POST to add an officer
  */
 router.post("/officer", async (req, res) => {
-  if (!req.body.member) {
+  if (!req.body.officerId) {
     throw new ApiError("Must specify a current member's ID.");
   }
 
-  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.member}/tags`, {_owner: true});
+  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.officerId}/tags`, {_owner: true});
   res.json({_owner: true});
 });
 
@@ -134,20 +134,22 @@ router.post("/dues", async (req, res) => {
   };
 
   const id = await Database.set(`/orgs/${req.body.org}/due`, due);
+
+  let members = await Database.get(`/orgs/${req.body.org}/members`);
+  for (const [id] of Object.entries(members)) {
+    Database.set(`/orgs/${req.body.org}/members/${id}/tags/_unverified`, true)
+  }
+
   res.json({due});
 });
 
 /**
- * POST dues paid.
+ * DELETE due from user.
  */
- router.post("/dues/paid", async (req, res) => {
-  if (!req.body.member) {
-    throw new ApiError("Must specify a current member's ID.");
-  }
-
-  await Database.delete(`/orgs/${req.body.org}/members/${member}/tags/_unverified`);
-  await Database.set(`/orgs/${req.body.org}/members/${member}/tags`, {_verified: true});
-  res.json({_verified : true});
+router.delete("/dues", async (req, res) => {
+  await Database.remove(`/orgs/${req.body.orgId}/members/${req.body.memberId}/tags/_unverified`);
+  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.memberId}/tags`, {_verified: true});
+  res.json({});
 });
 
 /**

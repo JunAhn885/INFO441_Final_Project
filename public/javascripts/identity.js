@@ -10,10 +10,7 @@ export async function loadIdentity() {
       // We are logged in
       const user = await res.json();
       div.innerHTML = `
-        <a href="/userInfo.html?user=${user.id}">
-          ${escapeHtml(user.name)}
-          (${escapeHtml(user.email)})
-        </a>
+        ${escapeHtml(user.name)}, ${escapeHtml(user.email)}
         <a href="signout" class="btn btn-danger" role="button">Log out</a>
       `;
       if(document.getElementById("loggedin")){

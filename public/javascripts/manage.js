@@ -13,7 +13,6 @@ import { fetchJSON } from "./utils.js";
 
     document.getElementById("btn-delete-club").addEventListener("click", onDeleteClub);
     document.getElementById("btn-add-member").addEventListener("click", onAddMember);
-    document.getElementById("btn-add-officer").addEventListener("click", onAddOfficer);
     document.getElementById("btn-change-club-dues").addEventListener("click", onChangeClubDues);
   }
 
@@ -34,46 +33,42 @@ import { fetchJSON } from "./utils.js";
         const member = await fetchJSON(`/api/user/${memberId}`);
         var memberName = member.name;
 
-        // if(orgInfo.members.memberId.tags._owner){
-        //   var promote = "Officer";
-        //   var kick = "N/A";
-        // } else {
-        //   var promote = document.createElement("button");
-        //   promote.id = memberId;
-        //   promote.innerText = "Promote";
-        //   promote.addEventListener("click", onMemberPromoteClick);
+        if(orgInfo.members[memberId].tags === undefined || orgInfo.members[memberId].tags['_owner'] === undefined){
+          var promote = document.createElement("button");
+          promote.id = memberId;
+          promote.innerText = "Promote";
+          promote.classList = "btn btn-sm btn-success";
+          promote.addEventListener("click", onMemberPromoteClick);
 
-        //   var kick = document.createElement("button");
-        //   kick.id = memberId;
-        //   kick.innerText = "Kick";
-        //   kick.addEventListener("click", onMemberKickClick);
-        // }
+          var kick = document.createElement("button");
+          kick.id = memberId;
+          kick.innerText = "Kick";
+          kick.classList = "btn btn-sm btn-danger";
+          kick.addEventListener("click", onMemberKickClick);
 
-        // if(orgInfo.members.memberId.tags._unverified){
-        //   var due = document.createElement("button");
-        //   due.id = memberId;
-        //   due.innerText = "Mark Due";
-        //   due.addEventListener("click", onMemberDueClick);
-        // } else if(member.tags._verified) {
-        //   var due = "Paid";
-        // } else {
-        //   var due = "None";
-        // }
+          var promoKick = false;
+          var role = "Member";
+        } else {
+          var promote = "";
+          var kick = "";
+          var promoKick = true;
+          var role = "Officer";
+        }
 
-        var promote = document.createElement("button");
-        promote.id = memberId;
-        promote.innerText = "Promote";
-        promote.addEventListener("click", onMemberPromoteClick);
-
-        var kick = document.createElement("button");
-        kick.id = memberId;
-        kick.innerText = "Kick";
-        kick.addEventListener("click", onMemberKickClick);
-
-        var due = document.createElement("button");
-        due.id = memberId;
-        due.innerText = "Mark Due";
-        due.addEventListener("click", onMemberDueClick);
+        if(orgInfo.due === undefined || orgInfo.members[memberId].tags === undefined){
+          var due = "None";
+          var dueText = true;
+        } else if(orgInfo.members[memberId].tags['_verified']) {
+          var due = "Paid";
+          var dueText = true;
+        } else {
+          var due = document.createElement("button");
+          due.id = memberId;
+          due.innerText = "Mark Due";
+          due.classList = "btn btn-sm btn-success";
+          due.addEventListener("click", onMemberDueClick);
+          var dueText = false;
+        }
 
         var table = document.getElementById(`member-info`);
 
@@ -84,12 +79,25 @@ import { fetchJSON } from "./utils.js";
         var cell2 = newRow.insertCell(2);
         var cell3 = newRow.insertCell(3);
         var cell4 = newRow.insertCell(4);
+        var cell5 = newRow.insertCell(5);
 
         cell.innerHTML = memberId;
         cell1.innerHTML = memberName;
-        cell2.appendChild(due);
-        cell3.appendChild(kick);
-        cell4.appendChild(promote);
+        cell2.innerHTML = role;
+
+        if(dueText){
+          cell3.innerHTML = due;
+        } else {
+          cell3.appendChild(due);
+        }
+
+        if(promoKick){
+          cell4.innerHTML = kick;
+          cell5.innerHTML = promote;
+        } else {
+          cell4.appendChild(kick);
+          cell5.appendChild(promote);
+        }
       }
     } catch(e) {
       throw e;
@@ -103,7 +111,7 @@ import { fetchJSON } from "./utils.js";
     try{
       await fetchJSON(`api/org/officer`, {
         method: "POST",
-        body: {member: this.id, orgId: orgId}
+        body: {officerId: this.id, orgId: orgId}
       });
       window.location.reload();
     } catch(e) {
@@ -130,9 +138,9 @@ import { fetchJSON } from "./utils.js";
     const urlParams = new URLSearchParams(window.location.search);
     const orgId = urlParams.get('org');
     try{
-      await fetchJSON(`api/org/dues/paid`, {
-        method: "POST",
-        body: {member: this.id, orgId: orgId}
+      await fetchJSON(`api/org/dues`, {
+        method: "DELETE",
+        body: {memberId: this.id, orgId: orgId}
       });
       window.location.reload();
     } catch(e) {
@@ -177,27 +185,6 @@ import { fetchJSON } from "./utils.js";
     document.getElementById("add-user-name").value = "";
     window.location.reload();
     //Can add a sentence that tells user the member has been add
-  }
-
-
-  async function onAddOfficer() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const org = urlParams.get('org')
-    let officerId = document.getElementById("add-officer-id").value;
-
-    try{
-      console.log("Adding Officer to Club");
-      await fetchJSON(`api/org/officer`, {
-        method: "POST",
-        body: {id: officerId, org: org}
-      });
-      console.log("Added Officer");
-    } catch(e) {
-      throw e;
-    }
-    window.location.reload();
-    document.getElementById("add-officer-email").value = "";
-    document.getElementById("add-officer-name").value = "";
   }
 
   async function onChangeClubDues(){

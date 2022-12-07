@@ -23,7 +23,7 @@ import { fetchJSON } from "./utils.js";
         return `
         <div>
           ${club.name}
-          <a href="/manage.html?org=${encodeURIComponent(club.id)}"><button id="btn-manage-club">Manage Club</button></a>
+          <a href="/manage.html?org=${encodeURIComponent(club.id)}"><button id="btn-manage-club" class="btn btn-secondary btn-sm">Manage Club</button></a>
         </div>
         `
       }).join('\n');
