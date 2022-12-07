@@ -1,6 +1,6 @@
 "use strict";
 
-import { get, getDatabase, push, ref, remove, set } from "firebase/database";
+import { equalTo, get, getDatabase, orderByChild, push, query, ref, remove, set } from "firebase/database";
 
 /**
  * An API error to be returned to the user.
@@ -85,6 +85,44 @@ export class Database {
     const reference = ref(getDatabase(), path);
     const snapshot = await get(reference);
     return snapshot.val();
+  }
+
+  /**
+   * Gets values within the given collection from Firebase Realtime Database
+   * with the given value at the given child key.
+   * Example:
+   * ```
+   * /users -> {
+   *   "alice": {
+   *     "name": "Alice"
+   *   },
+   *   "bob": {
+   *     "name": "Bob"
+   *   }
+   * }
+   * ```
+   * ```
+   * await getByChildValue("/users", "name", "Bob") === {
+   *   "bob": {
+   *     "name": "Bob"
+   *   }
+   * }
+   * ```
+   * ```
+   * await getByChildValue("/users", "name", "Charlie") === null
+   * ```
+   * @param {string} path Path to the collection of values.
+   * @param {string} childKey Name of the child key to filter on.
+   * @param {string} childValue Value of the child key to match.
+   * @returns Query results, or `null` if none is found.
+   */
+  static async getByChildValue(path, childKey, childValue) {
+    const collection = ref(getDatabase(), path);
+    const myQuery = query(
+      collection, orderByChild(childKey), equalTo(childValue)
+    );
+    const snapshot = await get(myQuery);
+    return await snapshot.val();
   }
 
   /**

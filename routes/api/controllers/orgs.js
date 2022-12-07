@@ -1,5 +1,7 @@
 "use strict";
 
+import crypto from "node:crypto";
+
 import express from "express";
 
 import { ApiError, Database } from "../utils.js";
@@ -7,14 +9,16 @@ import { ApiError, Database } from "../utils.js";
 const router = express.Router();
 
 /**
- * GET joined organizations.
+ * GET joined orgs, or the org with the given ID.
 */
 router.get("/:id?", async (req, res) => {
   if (req.params.id) {
-    let org = {};
-
+    // Get org with ID
     const orgPath = `/orgs/${req.params.id}`;
-    org = await Database.get(orgPath);
+    const org = await Database.get(orgPath);
+    if (!org) {
+      throw new ApiError("The given org ID does not exist.");
+    }
 
     res.json(org);
   } else {
@@ -43,6 +47,7 @@ router.post("/", async (req, res) => {
   if (!req.body.name) {
     throw new ApiError("Must specify a name for the new organization.");
   }
+
   const now = new Date().toISOString();
   const org = {
     name: req.body.name,
@@ -51,6 +56,7 @@ router.post("/", async (req, res) => {
       [req.user.id]: {
         timeJoined: now,
         tags: {
+          // Creator is owner
           _owner: true
         }
       }
@@ -65,40 +71,46 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * POST to add a member to org
+ * POST to add an existing or new user to the org with the given ID.
  */
 router.post("/member", async (req, res) => {
-  if (!req.body.name) {
-    throw new ApiError("Must specify a name for the new member.");
-  }
   if (!req.body.email) {
-    throw new ApiError("Must specify a email for the new member.");
+    throw new ApiError("Must specify the email of the new member.");
   }
-  const now = new Date().toISOString();
 
-  const user = {
-    name: req.body.name,
-    email: req.body.email
+  const userInfo = {
+    timeJoined: new Date().toISOString()
   };
-  const id = await Database.insert("/users", user);
 
-  let userInfo = {};
-  if(await Database.get(`/orgs/${req.body.orgId}/due`)){
-    userInfo = {
-      tags: {
-        _unverified: true
-      },
-      timeJoined: now
-    };
+  // Try to find an existing member
+  let memberId;
+  const emailUser = await Database.getByChildValue(
+    "/users", "email", req.body.email
+  );
+  if (emailUser) {
+    // Found existing user with given email, add as member
+    memberId = Object.keys(emailUser)[0];
   } else {
-    userInfo = {
-      timeJoined: now
+    // Create a new user with a temporary ID based on their email
+    const hash = crypto.createHash("sha256");
+    hash.update(req.body.email);
+    memberId = hash.digest("hex");
+    await Database.set(`/users/${memberId}`, {
+      email: req.body.email
+    });
+  }
+
+  if (await Database.get(`/orgs/${req.body.orgId}/due`)) {
+    // Club has dues, default to unverified
+    userInfo["tags"] = {
+      _unverified: true
     };
   }
 
-  await Database.set(`/orgs/${req.body.orgId}/members/${id}`, userInfo);
+  await Database.set(`/orgs/${req.body.orgId}/members/${memberId}`, userInfo);
 
   res.json({
+    id: memberId,
     ...userInfo
   });
 });
