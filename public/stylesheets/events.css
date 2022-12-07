@@ -4,3 +4,8 @@
 #h2-org-name {
   text-transform: uppercase;
 }
+
+/* Collapsible rows */
+.row-collapsible {
+  padding: 0;
+}

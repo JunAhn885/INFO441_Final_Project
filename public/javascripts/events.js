@@ -54,22 +54,47 @@ import { fetchJSON, fromNow, id } from "./utils.js";
       }
 
       // Also create buttons
-      const editButton = document.createElement("button");
-      editButton.textContent = "Edit";
-      editButton.classList.add("btn", "btn-primary");
-      editButton.addEventListener("click", onEventEdit);
+      const viewButton = document.createElement("button");
+      viewButton.textContent = "View";
+      viewButton.classList.add("btn", "btn-primary");
+      viewButton.addEventListener("click", onEventView);
+      viewButton.setAttribute("data-bs-toggle", "collapse");
+      viewButton.setAttribute("data-bs-target", `#collapse-${event.id}`);
       const edit = row.insertCell();
-      edit.appendChild(editButton);
+      edit.appendChild(viewButton);
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
       deleteButton.classList.add("btn", "btn-danger");
       deleteButton.addEventListener("click", onEventDelete);
       const delete_ = row.insertCell();
       delete_.appendChild(deleteButton);
+
+      // Create another row for collapsible
+      const hiddenRow = table.insertRow();
+      hiddenRow.classList.add("row-collapsible");
+      const hiddenCell = hiddenRow.insertCell();
+      hiddenCell.colSpan = 6;
+      const div = document.createElement("div");
+      div.id = `collapse-${event.id}`;
+      div.classList.add("collapse", "card", "card-body");
+      const caption = document.createElement("h3");
+      caption.innerText = "Scan to check in";
+      div.appendChild(caption);
+      const qrDiv = document.createElement("div");
+      div.appendChild(qrDiv);
+      const qr = new QRCode(qrDiv, {
+        text: window.location.origin + `/direct/checkin/${event.key}`,
+        width: 256,
+        height: 256,
+        colorDark : "#4b2e83",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+      hiddenCell.appendChild(div);
     }
   }
 
-  async function onEventEdit() {
+  async function onEventView() {
     // ...
   }
 
