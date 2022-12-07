@@ -117,7 +117,7 @@ router.post("/officer", async (req, res) => {
     throw new ApiError("Must specify a current member's ID.");
   }
 
-  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.officerId}/tags`, {_owner: true});
+  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.officerId}/tags/_owner`, true);
   res.json({_owner: true});
 });
 
@@ -148,7 +148,7 @@ router.post("/dues", async (req, res) => {
  */
 router.delete("/dues", async (req, res) => {
   await Database.remove(`/orgs/${req.body.orgId}/members/${req.body.memberId}/tags/_unverified`);
-  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.memberId}/tags`, {_verified: true});
+  await Database.set(`/orgs/${req.body.orgId}/members/${req.body.memberId}/tags/_verified`, true);
   res.json({});
 });
 
