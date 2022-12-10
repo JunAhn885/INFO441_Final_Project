@@ -15,25 +15,24 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light">
     <div id="errorInfo" class="alert alert-danger fade show" role="alert" style="opacity:0"></div>
     <div><a href="/">Return to Homepage</a></div>
     <div id="identity_div">loading...</div>
   </nav>
-  <h1>Event Management</h1>
-  <h2 class="h2-subtitle" id="h2-org-name"></h2>
+  <h1>Event Management: <span class="h2-subtitle" id="h2-org-name"></span></h1>
 
   <form id="form-add-event">
     <h3>Add an Event</h3>
     <label for="input-event-name">Name:</label>
     <input id="input-event-name" placeholder="Event Name" name="name" required>
-    <br>
+    <br/>
     <label for="input-event-start">Check-in opens at:</label>
     <input id="input-event-start" name="timeNotBefore" type="datetime-local" required>
-    <br>
+    <br/>
     <label for="input-event-end">Check-in closes at:</label>
     <input id="input-event-end" name="timeNotAfter" type="datetime-local" required>
-    <br>
+    <br/>
     <button class="btn btn-primary btn-sm">Add Event</button>
   </form>
   <em id="em-form-result"></em>

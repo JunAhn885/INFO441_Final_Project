@@ -56,7 +56,7 @@ import { fetchJSON, fromNow, id } from "./utils.js";
       // Also create buttons
       const viewButton = document.createElement("button");
       viewButton.textContent = "View";
-      viewButton.classList.add("btn", "btn-primary");
+      viewButton.classList.add("btn", "btn-primary", "btn-sm");
       viewButton.addEventListener("click", onEventView);
       viewButton.setAttribute("data-bs-toggle", "collapse");
       viewButton.setAttribute("data-bs-target", `#collapse-${event.id}`);
@@ -64,7 +64,7 @@ import { fetchJSON, fromNow, id } from "./utils.js";
       edit.appendChild(viewButton);
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
-      deleteButton.classList.add("btn", "btn-danger");
+      deleteButton.classList.add("btn", "btn-danger", "btn-sm");
       deleteButton.addEventListener("click", onEventDelete);
       const delete_ = row.insertCell();
       delete_.appendChild(deleteButton);
@@ -79,16 +79,18 @@ import { fetchJSON, fromNow, id } from "./utils.js";
       div.classList.add("collapse", "card", "card-body");
       const caption = document.createElement("h3");
       caption.innerText = "Scan to check in";
+      caption.classList = 'text-center';
       div.appendChild(caption);
       const qrDiv = document.createElement("div");
       div.appendChild(qrDiv);
+      qrDiv.classList.add("d-flex", "justify-content-center");
       const qr = new QRCode(qrDiv, {
         text: window.location.origin + `/direct/checkin/${event.key}`,
         width: 256,
         height: 256,
-        colorDark : "#4b2e83",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        colorDark: "#4b2e83",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
       });
       hiddenCell.appendChild(div);
     }

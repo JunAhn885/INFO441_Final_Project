@@ -15,9 +15,11 @@ export async function loadIdentity() {
       `;
       if(document.getElementById("loggedin")){
         document.getElementById("loggedin").classList.remove("d-none");
+        document.getElementById("loggedout").classList.add("d-none");
       }
     } else {
       // We are not logged in
+      document.getElementById("loggedout").classList.remove("d-none");
       div.innerHTML = `
         <a href="signin" class="btn btn-primary" role="button">Log in</a>
       `;

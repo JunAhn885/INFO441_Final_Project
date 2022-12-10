@@ -38,8 +38,10 @@ for member management.
 |P0|As a Club Officer|I want to be able to change the club's information on the website (add and change club dues, and add officer roles)|Use **post** and **delete** to make appropriate updates about the club. Information will be sent in **JSON** format, While requests will be handled from the backend|
 |P0|As a Club Officer|I want to track the dues/finances of my club members|There will be an button for marking a member when they have paid dues. This functionality will be handled using **POST** and **GET** requests|
 |P1|As a Club Officer|I want to be able to access the app specifically for our club|Use **authentication** to create numerous accounts specific to the RSO and give authorization only to the RSO members|
-|P2|As a Club Officer|I want to be able to check attendance of the members|Secretary can simply check attendance by clicking on the checkbox next to the member’s name, which will send a **POST** request to the **Firebase DB** to update attendance|
-|P3|As a Club Officer|I want to be able to send out mass emails to all members|Officer can select members (all or specific) on the app which will send a **GET** request to **Firebase DB** to extract emails which then will send mass emails to the selected memebrs|
+|P1|As a Club Officer|I want to be able to check attendance of the members|Club officer can send out a event QR code for specific events (meetings/actual events) and users can register, which will send a **POST** request to the **Firebase DB** to update attendance|
+|P2|As a Club Officer|I want to be able to kick and promote members in my club|Officer can press a promote or kick button next to users that provides them removes them or gives them access to the club which would either **POST** an officer tag onto the user or **DELETE** request the user from the club.|
+|P2|As a Club Officer|I want to be able delete my club |Officer can a delete button that sends a **DELETE** request to **Firebase** which removes the club from the database.|
+|P2|As a Club Officer|I want to be able to send out mass emails to all members|Officer can select members (all or specific) on the app which will send a **GET** request to **Firebase DB** to extract emails which then will send mass emails to the selected memebrs|
 
 ### Endpoints
 

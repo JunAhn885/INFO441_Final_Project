@@ -11,17 +11,29 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light">
     <div id="errorInfo" class="alert alert-danger fade show" role="alert" style="opacity:0"></div>
     <div id="identity_div">loading...</div>
   </nav>
   <h1 class="text-center">Human Outsourcers</h1>
-  <div id="loggedin" class="d-none">
+  <div id="loggedout" class="intro text-center mt-5">
+    <br>
+    <h2>Welcome to Human Outsourcers!</h2>
+    <h3>
+      Home of RSO Management at the University of Washington, 
+      <br>
+      we strive to make your lives as RSO leaders a bit easier!
+    </h3>
+  </div>
+  <br>
+  <div id="loggedin" class="d-none text-center">
     <h2>Create Club</h2>
     <div id="create-club">
       <input type="text" id="clubName" placeholder="Club Name">
       <button id="btn-create-club" class="btn btn-success btn-sm">Create Club</button>
     </div>
+    <br>
+    <br>
     <h2>Your Clubs</h2>
     <div id="user-clubs">
 
