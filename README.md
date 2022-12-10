@@ -1,5 +1,7 @@
 # Human Outsourcers: RSO Member Management App
 
+Now available at [this link](https://calm-mud-93bc49b77f604708ab96699761b18beb.azurewebsites.net).
+
 By Jun Ahn, Patricia Ma, Scott Nguyen, and Jack Sui.
 
 **For developers:** also read [development notes](DEVELOP.md).
